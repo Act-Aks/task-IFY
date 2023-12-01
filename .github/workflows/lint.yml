@@ -24,3 +24,5 @@ jobs:
         run: npm run format
       - name: Lint
         run: npm run lint
+      - name: Output
+        run: echo "No linting errors found"
