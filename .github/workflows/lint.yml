@@ -1,0 +1,26 @@
+name: Check Lint
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/**'
+
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Load dependencies
+        run: npm ci
+      - name: Format
+        run: npm run format
+      - name: Lint
+        run: npm run lint
