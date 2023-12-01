@@ -28,6 +28,4 @@ jobs:
           echo 'All formatting checks passed.'
 
       - name: Lint
-        run: |
-          npm run lint
-          echo 'No lint errors.'
+        run: npm run lint
