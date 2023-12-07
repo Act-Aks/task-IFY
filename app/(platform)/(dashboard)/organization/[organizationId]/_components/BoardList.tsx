@@ -1,9 +1,24 @@
 import { HelpCircle, User2 } from 'lucide-react'
 
+import { fetchBoards } from '@/actions/fetch-boards'
 import { FormPopover } from '@/components/Form/FormPopover'
 import { Hint } from '@/components/ui/hint'
+import { Skeleton } from '@/components/ui/skeleton'
+import { generateRoute } from '@/lib/utils'
 
-export const BoardList = () => {
+import { auth } from '@clerk/nextjs'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+
+export const BoardList = async () => {
+  const { orgId } = auth()
+
+  if (!orgId) {
+    return redirect(generateRoute('selectOrg'))
+  }
+
+  const { boards } = await fetchBoards(orgId)
+
   return (
     <div className='space-y-2'>
       <div className='flex items-center font-semibold text-lg text-neutral-700'>
@@ -11,6 +26,17 @@ export const BoardList = () => {
         Your Boards
       </div>
       <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
+        {boards.map(board => (
+          <Link
+            key={board.id}
+            href={generateRoute('board', { id: board.id })}
+            style={{ backgroundImage: `url(${board.imageThumbUrl})` }}
+            className='group relative aspect-video bg-no-repeat bg-center bg-cover bg-violet-700 rounded-sm h-full w-full p-2 overflow-hidden'>
+            <div className='absolute inset-0 bg-black/30 group-hover:bg-black/40 transition'>
+              <p className='text-white font-semibold relative p-2'>{board.title}</p>
+            </div>
+          </Link>
+        ))}
         <div className='aspect-video relative h-full w-full rounded-sm flex items-center justify-center'>
           <FormPopover sideOffset={100} side='right'>
             <div
@@ -27,6 +53,21 @@ export const BoardList = () => {
           </Hint>
         </div>
       </div>
+    </div>
+  )
+}
+
+BoardList.Skeleton = function BoardListSkeleton() {
+  return (
+    <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
+      <Skeleton className='w-full h-full aspect-video p-2' />
     </div>
   )
 }

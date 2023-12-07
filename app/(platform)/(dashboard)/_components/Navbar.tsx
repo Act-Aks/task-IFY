@@ -21,14 +21,15 @@ export const Navbar = () => {
           <Button
             size={'sm'}
             variant={'primary-gradient'}
-            className='rounded-sm hidden md:block h-auto py-1.5 px-2'>
+            className='rounded-sm hidden md:block h-auto py-1.5 px-2'
+            asChild>
             Create
           </Button>
         </FormPopover>
         <FormPopover>
-          <Button size={'sm'} className='rounded-sm block md:hidden'>
+          <div className='block bg-gradient-to-r from-fuchsia-600 to-violet-600 text-primary-foreground hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-violet-700 rounded-sm px-3 py-2.5 justify-center items-center'>
             <Plus className='w-4 h-4' />
-          </Button>
+          </div>
         </FormPopover>
       </div>
 
