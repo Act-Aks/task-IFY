@@ -7,7 +7,13 @@ import { cn } from '@/lib/utils'
 
 type FormButtonProps = Pick<ButtonProps, 'disabled' | 'className' | 'variant' | 'children' | 'size'>
 
-export const FormButton = ({ children, disabled, variant, className, size }: FormButtonProps) => {
+export const FormButton = ({
+  children,
+  disabled,
+  variant = 'primary-gradient',
+  className,
+  size,
+}: FormButtonProps) => {
   const { pending } = useFormStatus()
   return (
     <Button

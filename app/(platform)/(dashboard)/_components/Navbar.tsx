@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 
+import { FormPopover } from '@/components/Form/FormPopover'
 import { Logo } from '@/components/Logo'
 import { Button } from '@/components/ui/button'
 import { routes } from '@/constants'
@@ -16,15 +17,19 @@ export const Navbar = () => {
         <div className='hidden md:flex'>
           <Logo />
         </div>
-        <Button
-          size={'sm'}
-          variant={'primary-gradient'}
-          className='rounded-sm hidden md:block h-auto py-1.5 px-2'>
-          Create
-        </Button>
-        <Button size={'sm'} className='rounded-sm block md:hidden'>
-          <Plus className='w-4 h-4' />
-        </Button>
+        <FormPopover align='start' side='bottom' sideOffset={16}>
+          <Button
+            size={'sm'}
+            variant={'primary-gradient'}
+            className='rounded-sm hidden md:block h-auto py-1.5 px-2'>
+            Create
+          </Button>
+        </FormPopover>
+        <FormPopover>
+          <Button size={'sm'} className='rounded-sm block md:hidden'>
+            <Plus className='w-4 h-4' />
+          </Button>
+        </FormPopover>
       </div>
 
       <div className='ml-auto flex items-center gap-x-2'>

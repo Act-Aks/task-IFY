@@ -5,7 +5,7 @@ import { Activity, CreditCard, Layout, Settings } from 'lucide-react'
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/lib/utils'
+import { cn, generateRoute } from '@/lib/utils'
 
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
@@ -32,22 +32,22 @@ export const NavItem = ({ isActive, isExpanded, organization, onExpand }: NavIte
     {
       label: 'Boards',
       icon: <Layout className='w-4 h-4 mr-2' />,
-      href: `/organization/${organization.id}`,
+      href: generateRoute('organization', { id: organization.id }),
     },
     {
       label: 'Activity',
       icon: <Activity className='w-4 h-4 mr-2' />,
-      href: `/organization/${organization.id}/activity`,
+      href: generateRoute('activity', { id: organization.id }),
     },
     {
       label: 'Settings',
       icon: <Settings className='w-4 h-4 mr-2' />,
-      href: `/organization/${organization.id}/settings`,
+      href: generateRoute('settings', { id: organization.id }),
     },
     {
       label: 'Billing',
       icon: <CreditCard className='w-4 h-4 mr-2' />,
-      href: `/organization/${organization.id}/billing`,
+      href: generateRoute('billing', { id: organization.id }),
     },
   ]
 
