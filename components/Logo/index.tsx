@@ -9,13 +9,7 @@ export const Logo = () => {
     <Link href={routes.home}>
       <div className='hover:opacity-75 trasition items-center gap-x-2 hidden md:flex'>
         <Image src={'/logo.svg'} alt='logo' width={30} height={30} />
-        <p
-          className={cn(
-            'text-lg text-neutral-700 pb-1',
-            headingFont.className,
-          )}>
-          Task-IFY
-        </p>
+        <p className={cn('text-lg text-neutral-700 pb-1', headingFont.className)}>Task-IFY</p>
       </div>
     </Link>
   )

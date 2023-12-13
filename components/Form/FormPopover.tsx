@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { createBoard } from '@/actions/create-board'
 import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useAction } from '@/hooks/useAction'
+import { useProModal } from '@/hooks/useProModal'
 import { generateRoute } from '@/lib/utils'
 
 import { Button } from '../ui/button'
@@ -29,6 +30,7 @@ export const FormPopover = ({
   sideOffset = 0,
 }: FormPopoverProps) => {
   const router = useRouter()
+  const proModal = useProModal()
   const closeRef = useRef<ElementRef<'button'>>(null)
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess(data) {
@@ -37,8 +39,8 @@ export const FormPopover = ({
       router.push(generateRoute('board', { id: data.id }))
     },
     onError(error) {
-      console.log(error)
       toast.error(error)
+      proModal.onOpen()
     },
   })
 

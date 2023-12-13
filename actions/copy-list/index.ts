@@ -1,5 +1,6 @@
 'use server'
 
+import { createAuditLog } from '@/lib/createAuditLog'
 import { CreateSafeAction } from '@/lib/createSafeAction'
 import { db } from '@/lib/db'
 import { generateRoute } from '@/lib/utils'
@@ -7,6 +8,7 @@ import { generateRoute } from '@/lib/utils'
 import { CopyList } from './schema'
 import { CopyListInputType, CopyListReturnType } from './types'
 import { auth } from '@clerk/nextjs'
+import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 const handler = async (data: CopyListInputType): Promise<CopyListReturnType> => {
@@ -61,6 +63,13 @@ const handler = async (data: CopyListInputType): Promise<CopyListReturnType> => 
         },
       },
       include: { cards: true },
+    })
+
+    await createAuditLog({
+      entityId: list.id,
+      entityTitle: list.title,
+      entityType: ENTITY_TYPE.LIST,
+      action: ACTION.CREATE,
     })
   } catch (error) {
     console.log(error)

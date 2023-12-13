@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: { boardId: string }
     }
   }
 
-  const { board } = await fetchBoardById(orgId, params.boardId)
+  const board = await fetchBoardById(orgId, params.boardId)
 
   return {
     title: board.title,
@@ -34,7 +34,7 @@ export default async function BoardIdLayout({
     redirect(generateRoute('selectOrg'))
   }
 
-  const { board } = await fetchBoardById(orgId, params.boardId)
+  const board = await fetchBoardById(orgId, params.boardId)
 
   return (
     <div

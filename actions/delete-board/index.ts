@@ -1,12 +1,16 @@
 'use server'
 
+import { createAuditLog } from '@/lib/createAuditLog'
 import { CreateSafeAction } from '@/lib/createSafeAction'
 import { db } from '@/lib/db'
+import { decrementAvailableCount } from '@/lib/organizationLimit'
+import { checkSubscription } from '@/lib/subscription'
 import { generateRoute } from '@/lib/utils'
 
 import { DeleteBoard } from './schema'
 import { DeleteBoardInputType, DeleteBoardReturnType } from './types'
 import { auth } from '@clerk/nextjs'
+import { ACTION, ENTITY_TYPE } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -19,6 +23,8 @@ const handler = async (data: DeleteBoardInputType): Promise<DeleteBoardReturnTyp
     }
   }
 
+  const isPro = await checkSubscription()
+
   const { id } = data
   let board
 
@@ -28,6 +34,17 @@ const handler = async (data: DeleteBoardInputType): Promise<DeleteBoardReturnTyp
         id,
         orgId,
       },
+    })
+
+    if (!isPro) {
+      await decrementAvailableCount()
+    }
+
+    await createAuditLog({
+      entityId: board.id,
+      entityTitle: board.title,
+      entityType: ENTITY_TYPE.BOARD,
+      action: ACTION.DELETE,
     })
   } catch (error) {
     console.log(error)

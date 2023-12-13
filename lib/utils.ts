@@ -30,4 +30,6 @@ export const generateRoute = (route: Route, params?: RouteParams) => {
   return path
 }
 
-generateRoute('organization', { id: '12345' })
+export const absoluteUrl = (path: string) => {
+  return `${process.env.NEXT_PUBLIC_APP_URL}${path}`
+}

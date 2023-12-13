@@ -4,6 +4,9 @@ import { fetchBoards } from '@/actions/fetch-boards'
 import { FormPopover } from '@/components/Form/FormPopover'
 import { Hint } from '@/components/ui/hint'
 import { Skeleton } from '@/components/ui/skeleton'
+import { MAX_FREE_BOARDS } from '@/constants/boards'
+import { getAvailableCount } from '@/lib/organizationLimit'
+import { checkSubscription } from '@/lib/subscription'
 import { generateRoute } from '@/lib/utils'
 
 import { auth } from '@clerk/nextjs'
@@ -17,7 +20,9 @@ export const BoardList = async () => {
     return redirect(generateRoute('selectOrg'))
   }
 
-  const { boards } = await fetchBoards(orgId)
+  const boards = await fetchBoards(orgId)
+  const availableCount = await getAvailableCount()
+  const isPro = await checkSubscription()
 
   return (
     <div className='space-y-2'>
@@ -43,7 +48,9 @@ export const BoardList = async () => {
               role='button'
               className='aspect-video absolute top-0 left-0 h-full w-full bg-gradient-to-r from-fuchsia-600/10 to-violet-600/10 rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition overflow-auto'>
               <p className='text-sm'> Create new board</p>
-              <span className='text-xs'>5 remaining</span>
+              <span className='text-xs'>
+                {isPro ? 'Unlimited' : `${MAX_FREE_BOARDS - availableCount} remaining`}
+              </span>
             </div>
           </FormPopover>
           <Hint

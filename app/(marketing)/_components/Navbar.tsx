@@ -13,10 +13,7 @@ export const Navbar = () => {
           <Button size={'sm'} variant={'outline'} asChild>
             <Link href={routes.signIn}>Login</Link>
           </Button>
-          <Button
-            size={'sm'}
-            className='bg-gradient-to-r from-fuchsia-600 to-violet-600'
-            asChild>
+          <Button size={'sm'} className='bg-gradient-to-r from-fuchsia-600 to-violet-600' asChild>
             <Link href={routes.signUp}>Get started for free</Link>
           </Button>
         </div>

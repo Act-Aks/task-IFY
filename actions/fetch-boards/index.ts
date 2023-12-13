@@ -14,7 +14,7 @@ export const fetchBoards = async (orgId: string) => {
     },
   })
 
-  return { boards }
+  return boards
 }
 
 export const fetchBoardById = async (orgId: string, boardId: string) => {
@@ -29,5 +29,5 @@ export const fetchBoardById = async (orgId: string, boardId: string) => {
     notFound()
   }
 
-  return { board }
+  return board
 }
