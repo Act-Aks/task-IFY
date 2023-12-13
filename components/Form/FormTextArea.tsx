@@ -55,3 +55,5 @@ export const FormTextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps>(
     )
   },
 )
+
+FormTextArea.displayName = 'FormTextArea'
